@@ -29,7 +29,7 @@ server = do
     chat <- liftIO $ newTVarIO V.empty
     appMiddleware
     getWebchat
-    getChat chat
+    getMessages chat
     postMessage chat
 
 appMiddleware :: SpockT IO ()
@@ -40,8 +40,8 @@ appMiddleware = do
 getWebchat :: SpockT IO ()
 getWebchat = get "/chat.html" $ file "html" "web/chat.html"
 
-getChat :: Chat -> SpockT IO ()
-getChat chat = get "/chat" $ json =<< liftIO (readTVarIO chat)
+getMessages :: Chat -> SpockT IO ()
+getMessages chat = get "/chat" $ json =<< liftIO (readTVarIO chat)
 
 postMessage :: Chat -> SpockT IO ()
 postMessage chat = do
