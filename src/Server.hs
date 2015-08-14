@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveGeneric #-}
 module Server
+    (server)
 where
 
 import Data.Aeson (ToJSON, FromJSON)
