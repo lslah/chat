@@ -1,4 +1,4 @@
-var MyApp = React.createClass({
+var ChatApp = React.createClass({
   getInitialState: function() {
     return {chat: [{name: "thomas", msg: "test"}]};
   },
@@ -14,7 +14,7 @@ var MyApp = React.createClass({
   },
   render: function() {
     return (
-      <div className="myApp">
+      <div className="chatApp">
         <InputField updateMessage={this.updateMessage} submitCallback={this.submitCallback} checked={this.state.checked} />
         <ChatWindow chat={this.state.chat} checked={this.state.checked} />
       </div>
@@ -76,6 +76,6 @@ var ChatWindow = React.createClass({
 
 
 React.render(
-    <MyApp />,
+    <ChatApp />,
     document.getElementById('app')
 );
