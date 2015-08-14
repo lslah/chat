@@ -1,5 +1,5 @@
 # Chat
-Webchat built with Haskell-Spock and ReactJS.
+Basic webchat built with Haskell-Spock and ReactJS.
 
 ## Install
 Clone the repository https://github.com/lslah/chat and run
