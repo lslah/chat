@@ -23,10 +23,8 @@ data Message = Message { name :: String
 instance ToJSON Message
 instance FromJSON Message
 
-data TimedMessage = TimedMessage { time :: C.UTCTime
-                                 , message :: Message
-                                 }
-                                 deriving (Show)
+data TimedMessage = TimedMessage C.UTCTime Message
+                       deriving (Show)
 
 instance ToJSON TimedMessage where
     toJSON (TimedMessage t m) = object ["name" .= (name m), "msg" .= (msg m), "time" .= t]
