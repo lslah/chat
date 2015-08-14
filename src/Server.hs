@@ -4,8 +4,8 @@ module Server
     (server)
 where
 
-import Data.Aeson (ToJSON, FromJSON)
---import qualified Data.Time.Clock as C
+import Data.Aeson (ToJSON, FromJSON, object, toJSON, (.=))
+import qualified Data.Time.Clock as C
 import qualified Data.Vector as V
 
 import Network.Wai.Middleware.Static (staticPolicy, hasPrefix)
@@ -18,12 +18,20 @@ import Control.Monad.Trans (liftIO)
 data Message = Message { name :: String
                        , msg :: String
                        }
-                       deriving (Generic)
+                       deriving (Generic, Show)
 
 instance ToJSON Message
 instance FromJSON Message
 
-type Chat = TVar (V.Vector Message)
+data TimedMessage = TimedMessage { time :: C.UTCTime
+                                 , message :: Message
+                                 }
+                                 deriving (Show)
+
+instance ToJSON TimedMessage where
+    toJSON (TimedMessage t m) = object ["name" .= (name m), "msg" .= (msg m), "time" .= t]
+
+type Chat = TVar (V.Vector TimedMessage)
 
 server :: SpockT IO ()
 server = do
@@ -48,10 +56,11 @@ postMessage :: Chat -> SpockT IO ()
 postMessage chat = do
         post ("/write") $ do
             m <- jsonBody'
-            --time <- liftIO $ C.getCurrentTime
-            liftIO $ atomically (appendMessage chat m)
+            time <- liftIO $ C.getCurrentTime
+            let tm = TimedMessage time m
+            liftIO $ atomically (appendMessage chat tm)
             json =<< liftIO (readTVarIO chat)
 
-appendMessage :: Chat -> Message -> STM ()
-appendMessage chat m = modifyTVar chat append
-    where append messages = V.take 10 .  V.cons m $  messages
+appendMessage :: Chat -> TimedMessage -> STM ()
+appendMessage chat tm = modifyTVar chat append
+    where append messages = V.take 10 .  V.cons tm $ messages

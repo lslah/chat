@@ -16,7 +16,7 @@ var MyApp = React.createClass({
     return (
       <div className="myApp">
         <InputField updateMessage={this.updateMessage} submitCallback={this.submitCallback} checked={this.state.checked} />
-        <MyBox chat={this.state.chat} checked={this.state.checked} />
+        <ChatWindow chat={this.state.chat} checked={this.state.checked} />
       </div>
     );
   }
@@ -60,10 +60,10 @@ var InputField = React.createClass({
   }
 });
 
-var MyBox = React.createClass({
+var ChatWindow = React.createClass({
   render: function() {
     var chat = this.props.chat.map(function (msg) {
-      return <li>{msg.name}: {msg.msg}</li>
+      return <li>{msg.name} ({msg.time}): {msg.msg}</li>
     });
 
     return (
