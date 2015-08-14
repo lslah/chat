@@ -3,9 +3,8 @@
 module Server
 where
 
-import Data.Monoid (mempty)
 import Data.Aeson (ToJSON, FromJSON)
-import qualified Data.Time.Clock as C
+--import qualified Data.Time.Clock as C
 import qualified Data.Vector as V
 
 import Network.Wai.Middleware.Static (staticPolicy, hasPrefix)
@@ -14,7 +13,6 @@ import Web.Spock.Safe
 import GHC.Generics
 import Control.Concurrent.STM
 import Control.Monad.Trans (liftIO)
-import qualified Data.ByteString.Char8 as B
 
 data Message = Message { name :: String
                        , msg :: String
@@ -45,7 +43,7 @@ postMessage :: Chat -> SpockT IO ()
 postMessage chat = do
         post ("/write") $ do
             m <- jsonBody'
-            time <- liftIO $ C.getCurrentTime
+            --time <- liftIO $ C.getCurrentTime
             liftIO $ atomically (appendMessage chat m)
             json =<< liftIO (readTVarIO chat)
 

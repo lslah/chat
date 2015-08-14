@@ -1,11 +1,11 @@
 name:                chat
 version:             0.1.0.0
-synopsis:            Initial project template from stack
+synopsis:            Basic webchat built with Haskell-Spock and ReactJS
 description:         Please see README.md
-homepage:            http://github.com/commercialhaskell/chat#readme
+homepage:            http://github.com/lslah/chat
 license:             BSD3
-author:              Your name here
-maintainer:          your.address@example.com
+author:              Thomas Wienecke
+maintainer:          wienecke.t@gmail.com
 -- copyright:           
 category:            Web
 build-type:          Simple
@@ -15,6 +15,7 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Server
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall -Werror
   build-depends:       base >= 4.7 && < 5
                      , aeson
                      , bytestring
@@ -33,7 +34,7 @@ library
 executable chat-exe
   hs-source-dirs:      app
   main-is:             Main.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall -Werror
   build-depends:       base
                      , chat
                      , Spock
@@ -45,9 +46,9 @@ test-suite chat-test
   main-is:             Spec.hs
   build-depends:       base
                      , chat
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall -Werror
   default-language:    Haskell2010
 
 source-repository head
   type:     git
-  location: https://github.com/commercialhaskell/chat
+  location: https://github.com/lslah/chat
