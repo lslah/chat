@@ -68,7 +68,7 @@ var ChatWindow = React.createClass({
 
     return (
         <div className="mainBox">
-          <ol> {chat} </ol>
+          <ul> {chat} </ul>
         </div>
     );
   }
