@@ -28,6 +28,7 @@ server :: SpockT IO ()
 server = do
     chat <- liftIO $ newTVarIO V.empty
     appMiddleware
+    getWebchat
     getChat chat
     postMessage chat
 
@@ -35,6 +36,9 @@ appMiddleware :: SpockT IO ()
 appMiddleware = do
     middleware . staticPolicy $ hasPrefix "web/"
     middleware logStdoutDev
+
+getWebchat :: SpockT IO ()
+getWebchat = get "/chat.html" $ file "html" "web/chat.html"
 
 getChat :: Chat -> SpockT IO ()
 getChat chat = get "/chat" $ json =<< liftIO (readTVarIO chat)
