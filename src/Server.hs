@@ -31,6 +31,7 @@ data TimedMessage = TimedMessage { time :: C.UTCTime
 instance ToJSON TimedMessage where
     toJSON (TimedMessage t m) = object ["name" .= (name m), "msg" .= (msg m), "time" .= t]
 
+-- This is the "database"
 type Chat = TVar (V.Vector TimedMessage)
 
 server :: SpockT IO ()
