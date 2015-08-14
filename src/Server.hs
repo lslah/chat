@@ -48,7 +48,7 @@ appMiddleware = do
     middleware logStdoutDev
 
 getWebchat :: SpockT IO ()
-getWebchat = get "/chat.html" $ file "html" "web/chat.html"
+getWebchat = get "/chat.html" $ file "text/html" "web/chat.html"
 
 getMessages :: Chat -> SpockT IO ()
 getMessages chat = get "/chat" $ json =<< liftIO (readTVarIO chat)
